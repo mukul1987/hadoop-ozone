@@ -17,8 +17,8 @@
 
 package org.apache.hadoop.hdds.scm.ha.io;
 
-import com.google.protobuf.ByteString;
-import com.google.protobuf.InvalidProtocolBufferException;
+import org.apache.hadoop.thirdparty.protobuf.ByteString;
+import org.apache.hadoop.thirdparty.protobuf.InvalidProtocolBufferException;
 import org.apache.hadoop.security.ssl.KeyStoreTestUtil;
 import org.junit.Assert;
 import org.junit.Test;

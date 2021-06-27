@@ -58,8 +58,8 @@ import org.apache.hadoop.ozone.common.BlockGroup;
 import org.apache.hadoop.ozone.common.DeleteBlockGroupResult;
 
 import com.google.common.base.Preconditions;
-import com.google.protobuf.RpcController;
-import com.google.protobuf.ServiceException;
+import org.apache.hadoop.thirdparty.protobuf.ServiceException;
+import org.apache.hadoop.thirdparty.protobuf.RpcController;
 
 import static org.apache.hadoop.hdds.protocol.proto.ScmBlockLocationProtocolProtos.Status.OK;
 import static org.apache.hadoop.ozone.ClientVersions.CURRENT_VERSION;

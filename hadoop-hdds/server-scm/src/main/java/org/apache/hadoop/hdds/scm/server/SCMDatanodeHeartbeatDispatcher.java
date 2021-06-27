@@ -42,7 +42,7 @@ import org.apache.hadoop.hdds.server.events.EventPublisher;
 import org.apache.hadoop.ozone.protocol.commands.ReregisterCommand;
 import org.apache.hadoop.ozone.protocol.commands.SCMCommand;
 
-import com.google.protobuf.GeneratedMessage;
+import org.apache.hadoop.thirdparty.protobuf.GeneratedMessageV3;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -184,7 +184,7 @@ public final class SCMDatanodeHeartbeatDispatcher {
   /**
    * Wrapper class for events with the datanode origin.
    */
-  public static class ReportFromDatanode<T extends GeneratedMessage> {
+  public static class ReportFromDatanode<T extends GeneratedMessageV3> {
 
     private final DatanodeDetails datanodeDetails;
 

@@ -35,8 +35,8 @@ import org.apache.hadoop.ozone.protocol.proto.OzoneManagerProtocolProtos.OMReque
 import org.apache.hadoop.ozone.protocol.proto.OzoneManagerProtocolProtos.OMResponse;
 import org.apache.hadoop.security.UserGroupInformation;
 
-import com.google.protobuf.RpcController;
-import com.google.protobuf.ServiceException;
+import org.apache.hadoop.thirdparty.protobuf.RpcController;
+import org.apache.hadoop.thirdparty.protobuf.ServiceException;
 
 /**
  * Hadoop RPC based transport with failover support.
@@ -85,7 +85,7 @@ public class Hadoop27RpcTransport implements OmTransport {
       OMNotLeaderException notLeaderException =
           OMFailoverProxyProvider.getNotLeaderException(e);
       if (notLeaderException == null) {
-        throw ProtobufHelper.getRemoteException(e);
+        throw ProtobufHelper.getRemoteException(new com.google.protobuf.ServiceException(e.getCause()));
       }
       throw new IOException("Could not determine or connect to OM Leader.");
     }

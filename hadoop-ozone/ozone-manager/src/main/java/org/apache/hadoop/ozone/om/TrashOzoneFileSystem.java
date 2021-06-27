@@ -17,7 +17,7 @@
 package org.apache.hadoop.ozone.om;
 
 import com.google.common.base.Preconditions;
-import com.google.protobuf.RpcController;
+import org.apache.hadoop.thirdparty.protobuf.RpcController;
 import org.apache.hadoop.ozone.om.exceptions.OMException;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.permission.FsPermission;

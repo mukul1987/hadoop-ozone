@@ -17,7 +17,7 @@
  */
 package org.apache.hadoop.ozone.om.helpers;
 
-import com.google.protobuf.ByteString;
+import org.apache.hadoop.thirdparty.protobuf.ByteString;
 import java.util.BitSet;
 import org.apache.hadoop.ozone.OzoneAcl;
 import org.apache.hadoop.ozone.OzoneAcl.AclScope;
