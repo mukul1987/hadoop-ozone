@@ -144,7 +144,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <!-- ProtocolBuffer version, used to verify the protoc version and -->
     <!-- define the protobuf JAR version                               -->
     <legacy.hadooprpc.protobuf.version>2.5.0</legacy.hadooprpc.protobuf.version>
-    <hadooprpc.protobuf.version>3.7.0</hadooprpc.protobuf.version>
+    <hadooprpc.protobuf.version>3.7.1</hadooprpc.protobuf.version>
     <hadoop-thirdparty.version>1.1.1</hadoop-thirdparty.version>
 
     <findbugs.version>3.0.0</findbugs.version>
@@ -1304,11 +1304,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <groupId>com.google.re2j</groupId>
         <artifactId>re2j</artifactId>
         <version>${re2j.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.google.protobuf</groupId>
-        <artifactId>protobuf-java</artifactId>
-        <version>${hadooprpc.protobuf.version}</version>
       </dependency>
       <dependency>
         <groupId>commons-daemon</groupId>
