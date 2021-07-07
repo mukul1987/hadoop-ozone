@@ -45,7 +45,7 @@ import org.apache.hadoop.hdds.scm.protocol.ScmBlockLocationProtocol;
 import org.apache.hadoop.hdds.scm.protocolPB.ScmBlockLocationProtocolPB;
 import org.apache.hadoop.hdds.utils.HddsServerUtil;
 import org.apache.hadoop.io.IOUtils;
-import org.apache.hadoop.ipc.ProtobufRpcEngine;
+import org.apache.hadoop.ipc.ProtobufRpcEngine2;
 import org.apache.hadoop.ipc.RPC;
 import org.apache.hadoop.ipc.Server;
 import org.apache.hadoop.ozone.audit.AuditAction;
@@ -61,8 +61,8 @@ import org.apache.hadoop.hdds.utils.ProtocolMessageMetrics;
 import org.apache.hadoop.hdds.scm.protocol.ScmBlockLocationProtocolServerSideTranslatorPB;
 
 import com.google.common.collect.Maps;
-import com.google.protobuf.BlockingService;
-import com.google.protobuf.ProtocolMessageEnum;
+import org.apache.hadoop.thirdparty.protobuf.BlockingService;
+import org.apache.hadoop.thirdparty.protobuf.ProtocolMessageEnum;
 import static org.apache.hadoop.hdds.scm.ScmConfigKeys.OZONE_SCM_HANDLER_COUNT_DEFAULT;
 import static org.apache.hadoop.hdds.scm.ScmConfigKeys.OZONE_SCM_HANDLER_COUNT_KEY;
 import static org.apache.hadoop.hdds.scm.exceptions.SCMException.ResultCodes.IO_EXCEPTION;
@@ -103,7 +103,7 @@ public class SCMBlockProtocolServer implements
             OZONE_SCM_HANDLER_COUNT_DEFAULT);
 
     RPC.setProtocolEngine(conf, ScmBlockLocationProtocolPB.class,
-        ProtobufRpcEngine.class);
+        ProtobufRpcEngine2.class);
 
     protocolMessageMetrics =
         ProtocolMessageMetrics.create(

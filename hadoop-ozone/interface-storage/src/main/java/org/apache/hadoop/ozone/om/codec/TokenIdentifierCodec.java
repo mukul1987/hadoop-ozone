@@ -18,7 +18,7 @@
 package org.apache.hadoop.ozone.om.codec;
 
 import com.google.common.base.Preconditions;
-import com.google.protobuf.InvalidProtocolBufferException;
+import org.apache.hadoop.thirdparty.protobuf.InvalidProtocolBufferException;
 
 import org.apache.hadoop.ozone.security.OzoneTokenIdentifier;
 import org.apache.hadoop.hdds.utils.db.Codec;

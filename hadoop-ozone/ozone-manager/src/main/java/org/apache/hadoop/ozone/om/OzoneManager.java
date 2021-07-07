@@ -88,7 +88,7 @@ import org.apache.hadoop.hdds.utils.db.TableIterator;
 import org.apache.hadoop.hdds.utils.db.cache.CacheKey;
 import org.apache.hadoop.hdds.utils.db.cache.CacheValue;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.ipc.ProtobufRpcEngine;
+import org.apache.hadoop.ipc.ProtobufRpcEngine2;
 import org.apache.hadoop.ipc.RPC;
 import org.apache.hadoop.ipc.Server;
 import org.apache.hadoop.metrics2.util.MBeans;
@@ -181,8 +181,8 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
-import com.google.protobuf.BlockingService;
-import com.google.protobuf.ProtocolMessageEnum;
+import org.apache.hadoop.thirdparty.protobuf.BlockingService;
+import org.apache.hadoop.thirdparty.protobuf.ProtocolMessageEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -431,7 +431,7 @@ public final class OzoneManager extends ServiceRuntimeInfoImpl
     }
 
     RPC.setProtocolEngine(configuration, OzoneManagerProtocolPB.class,
-        ProtobufRpcEngine.class);
+        ProtobufRpcEngine2.class);
 
     secConfig = new SecurityConfig(configuration);
     // Create the KMS Key Provider
@@ -1283,7 +1283,7 @@ public final class OzoneManager extends ServiceRuntimeInfoImpl
     final int handlerCount = conf.getInt(OZONE_OM_HANDLER_COUNT_KEY,
         OZONE_OM_HANDLER_COUNT_DEFAULT);
     RPC.setProtocolEngine(configuration, OzoneManagerProtocolPB.class,
-        ProtobufRpcEngine.class);
+        ProtobufRpcEngine2.class);
     this.omServerProtocol = new OzoneManagerProtocolServerSideTranslatorPB(
         this, omRatisServer, omClientProtocolMetrics, isRatisEnabled,
         getLastTrxnIndexForNonRatis());
@@ -1691,8 +1691,8 @@ public final class OzoneManager extends ServiceRuntimeInfoImpl
   private void checkAcls(ResourceType resType, StoreType store,
       ACLType acl, String vol, String bucket, String key)
       throws IOException {
-    UserGroupInformation user = ProtobufRpcEngine.Server.getRemoteUser();
-    InetAddress remoteIp = ProtobufRpcEngine.Server.getRemoteIp();
+    UserGroupInformation user = ProtobufRpcEngine2.Server.getRemoteUser();
+    InetAddress remoteIp = ProtobufRpcEngine2.Server.getRemoteIp();
     checkAcls(resType, store, acl, vol, bucket, key,
         user != null ? user : getRemoteUser(),
         remoteIp != null ? remoteIp : omRpcAddress.getAddress(),
@@ -1710,8 +1710,8 @@ public final class OzoneManager extends ServiceRuntimeInfoImpl
     try {
       return checkAcls(resType, store, acl, vol, bucket, key,
           UserGroupInformation.createRemoteUser(userName),
-          ProtobufRpcEngine.Server.getRemoteIp(),
-          ProtobufRpcEngine.Server.getRemoteIp().getHostName(),
+          ProtobufRpcEngine2.Server.getRemoteIp(),
+          ProtobufRpcEngine2.Server.getRemoteIp().getHostName(),
           false, getVolumeOwner(vol, acl, resType));
     } catch (OMException ex) {
       // Should not trigger exception here at all
@@ -1989,7 +1989,7 @@ public final class OzoneManager extends ServiceRuntimeInfoImpl
   public List<OmVolumeArgs> listVolumeByUser(String userName, String prefix,
       String prevKey, int maxKeys) throws IOException {
     UserGroupInformation remoteUserUgi =
-        ProtobufRpcEngine.Server.getRemoteUser();
+        ProtobufRpcEngine2.Server.getRemoteUser();
     if (isAclEnabled) {
       if (remoteUserUgi == null) {
         LOG.error("Rpc user UGI is null. Authorization failed.");
@@ -2730,7 +2730,7 @@ public final class OzoneManager extends ServiceRuntimeInfoImpl
    * {@inheritDoc}
    */
   public S3SecretValue getS3Secret(String kerberosID) throws IOException {
-    UserGroupInformation user = ProtobufRpcEngine.Server.getRemoteUser();
+    UserGroupInformation user = ProtobufRpcEngine2.Server.getRemoteUser();
 
     // Check whether user name passed is matching with the current user or not.
     if (!user.getUserName().equals(kerberosID)) {

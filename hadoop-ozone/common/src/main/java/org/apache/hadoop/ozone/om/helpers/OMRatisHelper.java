@@ -17,8 +17,8 @@
 
 package org.apache.hadoop.ozone.om.helpers;
 
-import com.google.protobuf.InvalidProtocolBufferException;
-import com.google.protobuf.TextFormat;
+import org.apache.hadoop.thirdparty.protobuf.InvalidProtocolBufferException;
+import org.apache.hadoop.thirdparty.protobuf.TextFormat;
 import org.apache.hadoop.ozone.protocol.proto.OzoneManagerProtocolProtos
     .OMRequest;
 import org.apache.hadoop.ozone.protocol.proto.OzoneManagerProtocolProtos

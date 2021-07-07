@@ -51,7 +51,7 @@ import org.apache.hadoop.hdds.server.events.EventPublisher;
 import org.apache.hadoop.hdds.utils.HddsServerUtil;
 import org.apache.hadoop.hdds.utils.ProtocolMessageMetrics;
 import org.apache.hadoop.io.IOUtils;
-import org.apache.hadoop.ipc.ProtobufRpcEngine;
+import org.apache.hadoop.ipc.ProtobufRpcEngine2;
 import org.apache.hadoop.ipc.RPC;
 import org.apache.hadoop.ipc.Server;
 import org.apache.hadoop.ozone.audit.AuditAction;
@@ -78,8 +78,8 @@ import org.apache.hadoop.security.authorize.PolicyProvider;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
-import com.google.protobuf.BlockingService;
-import com.google.protobuf.ProtocolMessageEnum;
+import org.apache.hadoop.thirdparty.protobuf.BlockingService;
+import org.apache.hadoop.thirdparty.protobuf.ProtocolMessageEnum;
 import static org.apache.hadoop.hdds.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMCommandProto.Type.closeContainerCommand;
 import static org.apache.hadoop.hdds.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMCommandProto.Type.closePipelineCommand;
 import static org.apache.hadoop.hdds.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMCommandProto.Type.createPipelineCommand;
@@ -145,7 +145,7 @@ public class SCMDatanodeProtocolServer implements
     final int handlerCount = conf.getInt(OZONE_SCM_HANDLER_COUNT_KEY,
         OZONE_SCM_HANDLER_COUNT_DEFAULT);
 
-    RPC.setProtocolEngine(conf, getProtocolClass(), ProtobufRpcEngine.class);
+    RPC.setProtocolEngine(conf, getProtocolClass(), ProtobufRpcEngine2.class);
 
     BlockingService dnProtoPbService =
         StorageContainerDatanodeProtocolProtos

@@ -21,7 +21,7 @@ package org.apache.hadoop.ozone.om.request.s3.security;
 import com.google.common.base.Optional;
 import org.apache.hadoop.hdds.utils.db.cache.CacheKey;
 import org.apache.hadoop.hdds.utils.db.cache.CacheValue;
-import org.apache.hadoop.ipc.ProtobufRpcEngine;
+import org.apache.hadoop.ipc.ProtobufRpcEngine2;
 import org.apache.hadoop.ozone.OzoneConsts;
 import org.apache.hadoop.ozone.audit.OMAction;
 import org.apache.hadoop.ozone.om.OMMetadataManager;
@@ -63,7 +63,7 @@ public class S3RevokeSecretRequest extends OMClientRequest {
     final RevokeS3SecretRequest s3RevokeSecretRequest =
         getOmRequest().getRevokeS3SecretRequest();
     final String kerberosID = s3RevokeSecretRequest.getKerberosID();
-    final UserGroupInformation ugi = ProtobufRpcEngine.Server.getRemoteUser();
+    final UserGroupInformation ugi = ProtobufRpcEngine2.Server.getRemoteUser();
     final String username = ugi.getUserName();
     // Permission check. Users need to be themselves or have admin privilege
     if (!username.equals(kerberosID) &&

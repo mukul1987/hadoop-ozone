@@ -46,7 +46,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.google.protobuf.Descriptors.Descriptor;
+import org.apache.hadoop.thirdparty.protobuf.Descriptors.Descriptor;
 import org.apache.hadoop.hdds.conf.OzoneConfiguration;
 import org.apache.hadoop.hdds.protocol.proto.StorageContainerDatanodeProtocolProtos.ContainerAction;
 import org.apache.hadoop.hdds.protocol.proto.StorageContainerDatanodeProtocolProtos.PipelineAction;
@@ -57,7 +57,7 @@ import org.apache.ozone.test.LambdaTestUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.google.protobuf.GeneratedMessage;
+import org.apache.hadoop.thirdparty.protobuf.GeneratedMessageV3;
 
 /**
  * Test class for Datanode StateContext.
@@ -210,10 +210,10 @@ public class TestStateContext {
     }
   }
 
-  void checkReportCount(List<GeneratedMessage> reports,
+  void checkReportCount(List<GeneratedMessageV3> reports,
       Map<String, Integer> expectedReportCount) {
     Map<String, Integer> reportCount = new HashMap<>();
-    for (GeneratedMessage report : reports) {
+    for (GeneratedMessageV3 report : reports) {
       final String reportName = report.getDescriptorForType().getFullName();
       reportCount.put(reportName, reportCount.getOrDefault(reportName, 0) + 1);
     }
@@ -235,7 +235,7 @@ public class TestStateContext {
     assertNull(context1.getContainerReports());
     assertNull(context1.getNodeReport());
     assertNull(context1.getPipelineReports());
-    GeneratedMessage containerReports =
+    GeneratedMessageV3 containerReports =
         newMockReport(StateContext.CONTAINER_REPORTS_PROTO_NAME);
     context1.refreshFullReport(containerReports);
 
@@ -247,7 +247,7 @@ public class TestStateContext {
 
     // NodeReport
     StateContext context2 = newStateContext(conf, datanodeStateMachineMock);
-    GeneratedMessage nodeReport =
+    GeneratedMessageV3 nodeReport =
         newMockReport(StateContext.NODE_REPORT_PROTO_NAME);
     context2.refreshFullReport(nodeReport);
 
@@ -259,7 +259,7 @@ public class TestStateContext {
 
     // PipelineReports
     StateContext context3 = newStateContext(conf, datanodeStateMachineMock);
-    GeneratedMessage pipelineReports =
+    GeneratedMessageV3 pipelineReports =
         newMockReport(StateContext.PIPELINE_REPORTS_PROTO_NAME);
     context3.refreshFullReport(pipelineReports);
 
@@ -281,8 +281,8 @@ public class TestStateContext {
     return stateContext;
   }
 
-  private GeneratedMessage newMockReport(String messageType) {
-    GeneratedMessage report = mock(GeneratedMessage.class);
+  private GeneratedMessageV3 newMockReport(String messageType) {
+    GeneratedMessageV3 report = mock(GeneratedMessageV3.class);
     when(report.getDescriptorForType()).thenReturn(
         mock(Descriptor.class));
     when(report.getDescriptorForType().getFullName()).thenReturn(
@@ -301,7 +301,7 @@ public class TestStateContext {
     InetSocketAddress scm1 = new InetSocketAddress("scm1", 9001);
     InetSocketAddress scm2 = new InetSocketAddress("scm2", 9001);
 
-    GeneratedMessage generatedMessage =
+    GeneratedMessageV3 generatedMessage =
         newMockReport(StateContext.COMMAND_STATUS_REPORTS_PROTO_NAME);
 
     // Try to add report with zero endpoint. Should not be stored.
@@ -314,7 +314,7 @@ public class TestStateContext {
 
     // Add report. Should be added to all endpoints.
     stateContext.addIncrementalReport(generatedMessage);
-    List<GeneratedMessage> allAvailableReports =
+    List<GeneratedMessageV3> allAvailableReports =
         stateContext.getAllAvailableReports(scm1);
     assertEquals(1, allAvailableReports.size());
     assertEquals(1, stateContext.getAllAvailableReports(scm2).size());

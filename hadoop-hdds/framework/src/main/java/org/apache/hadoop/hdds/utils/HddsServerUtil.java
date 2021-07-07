@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.google.protobuf.BlockingService;
+import org.apache.hadoop.thirdparty.protobuf.BlockingService;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveOutputStream;
 import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
@@ -55,7 +55,7 @@ import org.apache.hadoop.hdds.scm.proxy.SCMSecurityProtocolFailoverProxyProvider
 import org.apache.hadoop.hdds.server.ServerUtils;
 import org.apache.hadoop.hdds.tracing.TracingUtil;
 import org.apache.hadoop.hdds.utils.db.DBCheckpoint;
-import org.apache.hadoop.ipc.ProtobufRpcEngine;
+import org.apache.hadoop.ipc.ProtobufRpcEngine2;
 import org.apache.hadoop.ipc.RPC;
 import org.apache.hadoop.metrics2.MetricsException;
 import org.apache.hadoop.metrics2.MetricsSystem;
@@ -114,7 +114,7 @@ public final class HddsServerUtil {
    */
   public static void addPBProtocol(Configuration conf, Class<?> protocol,
       BlockingService service, RPC.Server server) throws IOException {
-    RPC.setProtocolEngine(conf, protocol, ProtobufRpcEngine.class);
+    RPC.setProtocolEngine(conf, protocol, ProtobufRpcEngine2.class);
     server.addProtocol(RPC.RpcKind.RPC_PROTOCOL_BUFFER, protocol, service);
   }
 

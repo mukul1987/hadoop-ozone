@@ -53,8 +53,8 @@ import org.apache.hadoop.ozone.protocol.proto.OzoneManagerProtocolProtos.OMRespo
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
-import com.google.protobuf.InvalidProtocolBufferException;
-import com.google.protobuf.ServiceException;
+import org.apache.hadoop.thirdparty.protobuf.InvalidProtocolBufferException;
+import org.apache.hadoop.thirdparty.protobuf.ServiceException;
 import org.apache.ratis.RaftConfigKeys;
 import org.apache.ratis.conf.Parameters;
 import org.apache.ratis.conf.RaftProperties;

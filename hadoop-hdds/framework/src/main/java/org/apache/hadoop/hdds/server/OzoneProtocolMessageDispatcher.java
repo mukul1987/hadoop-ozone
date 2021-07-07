@@ -21,7 +21,7 @@ import org.apache.hadoop.hdds.function.FunctionWithServiceException;
 import org.apache.hadoop.hdds.tracing.TracingUtil;
 import org.apache.hadoop.hdds.utils.ProtocolMessageMetrics;
 
-import com.google.protobuf.ServiceException;
+import org.apache.hadoop.thirdparty.protobuf.ServiceException;
 import io.opentracing.Span;
 import org.slf4j.Logger;
 

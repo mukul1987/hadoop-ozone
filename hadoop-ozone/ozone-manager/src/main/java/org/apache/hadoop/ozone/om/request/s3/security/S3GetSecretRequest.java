@@ -28,7 +28,7 @@ import org.apache.hadoop.ozone.om.request.util.OmResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.apache.hadoop.ipc.ProtobufRpcEngine;
+import org.apache.hadoop.ipc.ProtobufRpcEngine2;
 import org.apache.hadoop.ozone.OmUtils;
 import org.apache.hadoop.ozone.OzoneConsts;
 import org.apache.hadoop.ozone.audit.OMAction;
@@ -72,7 +72,7 @@ public class S3GetSecretRequest extends OMClientRequest {
     // Generate S3 Secret to be used by OM quorum.
     String kerberosID = s3GetSecretRequest.getKerberosID();
 
-    final UserGroupInformation ugi = ProtobufRpcEngine.Server.getRemoteUser();
+    final UserGroupInformation ugi = ProtobufRpcEngine2.Server.getRemoteUser();
     final String username = ugi.getUserName();
     // Permission check. Users need to be themselves or have admin privilege
     if (!username.equals(kerberosID) &&

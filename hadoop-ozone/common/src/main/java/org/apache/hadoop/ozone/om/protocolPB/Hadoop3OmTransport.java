@@ -24,7 +24,7 @@ import org.apache.hadoop.hdds.conf.OzoneConfiguration;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.retry.RetryProxy;
 import org.apache.hadoop.ipc.ProtobufHelper;
-import org.apache.hadoop.ipc.ProtobufRpcEngine;
+import org.apache.hadoop.ipc.ProtobufRpcEngine2;
 import org.apache.hadoop.ipc.RPC;
 import org.apache.hadoop.ozone.OzoneConfigKeys;
 import org.apache.hadoop.ozone.om.exceptions.OMNotLeaderException;
@@ -34,8 +34,8 @@ import org.apache.hadoop.ozone.protocol.proto.OzoneManagerProtocolProtos.OMRespo
 import org.apache.hadoop.security.UserGroupInformation;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.protobuf.RpcController;
-import com.google.protobuf.ServiceException;
+import org.apache.hadoop.thirdparty.protobuf.RpcController;
+import org.apache.hadoop.thirdparty.protobuf.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,7 +61,7 @@ public class Hadoop3OmTransport implements OmTransport {
 
     RPC.setProtocolEngine(OzoneConfiguration.of(conf),
         OzoneManagerProtocolPB.class,
-        ProtobufRpcEngine.class);
+        ProtobufRpcEngine2.class);
 
     this.omFailoverProxyProvider = new OMFailoverProxyProvider(conf, ugi,
         omServiceId);

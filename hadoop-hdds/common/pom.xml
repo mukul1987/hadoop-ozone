@@ -43,8 +43,8 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
       <artifactId>picocli</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.google.protobuf</groupId>
-      <artifactId>protobuf-java</artifactId>
+      <groupId>org.apache.hadoop.thirdparty</groupId>
+      <artifactId>hadoop-shaded-protobuf_3_7</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>

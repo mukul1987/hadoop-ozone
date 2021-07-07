@@ -30,8 +30,8 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <dependencies>
     <dependency>
-      <groupId>com.google.protobuf</groupId>
-      <artifactId>protobuf-java</artifactId>
+      <groupId>org.apache.hadoop.thirdparty</groupId>
+      <artifactId>hadoop-shaded-protobuf_3_7</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.ozone</groupId>
@@ -71,6 +71,29 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
         <configuration>
           <excludeFilterFile>${basedir}/dev-support/findbugsExcludeFile.xml</excludeFilterFile>
         </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <configuration>
+              <tasks>
+                <replace token="com.google.protobuf"
+                         value="org.apache.hadoop.thirdparty.protobuf"
+                         dir="target/generated-sources/protobuf/java/org/apache/hadoop/ozone/protocol/proto">
+                </replace>
+                <replace token="com.google.protobuf"
+                         value="org.apache.hadoop.thirdparty.protobuf"
+                         dir="target/generated-sources/protobuf/java/org/apache/hadoop/ozone/security/proto">
+                </replace>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

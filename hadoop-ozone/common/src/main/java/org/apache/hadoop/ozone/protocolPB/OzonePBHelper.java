@@ -17,7 +17,7 @@
  */
 package org.apache.hadoop.ozone.protocolPB;
 
-import com.google.protobuf.ByteString;
+import org.apache.hadoop.thirdparty.protobuf.ByteString;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.ozone.security.proto.SecurityProtos.TokenProto;
 import org.apache.hadoop.security.token.Token;

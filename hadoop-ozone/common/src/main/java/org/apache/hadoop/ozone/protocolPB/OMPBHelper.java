@@ -17,7 +17,7 @@
  */
 package org.apache.hadoop.ozone.protocolPB;
 
-import com.google.protobuf.ByteString;
+import org.apache.hadoop.thirdparty.protobuf.ByteString;
 import org.apache.hadoop.crypto.CipherSuite;
 import org.apache.hadoop.crypto.CryptoProtocolVersion;
 import org.apache.hadoop.fs.FileEncryptionInfo;

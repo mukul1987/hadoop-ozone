@@ -33,14 +33,14 @@ import org.apache.hadoop.hdds.scm.ScmConfigKeys;
 import org.apache.hadoop.hdds.utils.HddsServerUtil;
 import org.apache.hadoop.hdds.utils.LegacyHadoopConfigurationSource;
 import org.apache.hadoop.hdds.utils.ProtocolMessageMetrics;
-import org.apache.hadoop.ipc.ProtobufRpcEngine;
+import org.apache.hadoop.ipc.ProtobufRpcEngine2;
 import org.apache.hadoop.ipc.RPC;
 import org.apache.hadoop.ozone.protocol.StorageContainerDatanodeProtocol;
 import org.apache.hadoop.ozone.protocolPB.StorageContainerDatanodeProtocolPB;
 import org.apache.hadoop.ozone.protocolPB.StorageContainerDatanodeProtocolServerSideTranslatorPB;
 import org.apache.ozone.test.GenericTestUtils;
 
-import com.google.protobuf.BlockingService;
+import org.apache.hadoop.thirdparty.protobuf.BlockingService;
 import static org.apache.hadoop.hdds.scm.ScmConfigKeys.HDDS_DATANODE_DIR_KEY;
 import org.mockito.Mockito;
 
@@ -96,7 +96,7 @@ public final class SCMTestUtils {
         LegacyHadoopConfigurationSource.asHadoopConfiguration(configuration);
     RPC.setProtocolEngine(hadoopConfig,
         StorageContainerDatanodeProtocolPB.class,
-        ProtobufRpcEngine.class);
+        ProtobufRpcEngine2.class);
 
     BlockingService scmDatanodeService =
         StorageContainerDatanodeProtocolService.

@@ -17,7 +17,7 @@
 package org.apache.hadoop.hdds.scm.server;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.protobuf.BlockingService;
+import org.apache.hadoop.thirdparty.protobuf.BlockingService;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -56,7 +56,7 @@ import org.apache.hadoop.hdds.protocol.SCMSecurityProtocol;
 import org.apache.hadoop.hdds.security.x509.certificate.authority.CertificateServer;
 import org.apache.hadoop.hdds.security.x509.certificate.utils.CertificateCodec;
 import org.apache.hadoop.hdds.utils.ProtocolMessageMetrics;
-import org.apache.hadoop.ipc.ProtobufRpcEngine;
+import org.apache.hadoop.ipc.ProtobufRpcEngine2;
 import org.apache.hadoop.ipc.RPC;
 import org.apache.hadoop.ipc.Server;
 import org.apache.hadoop.security.KerberosInfo;
@@ -108,7 +108,7 @@ public class SCMSecurityProtocolServer implements SCMSecurityProtocol {
         .getScmSecurityInetAddress(conf);
     // SCM security service RPC service.
     RPC.setProtocolEngine(conf, SCMSecurityProtocolPB.class,
-        ProtobufRpcEngine.class);
+        ProtobufRpcEngine2.class);
     metrics = new ProtocolMessageMetrics("ScmSecurityProtocol",
         "SCM Security protocol metrics",
         SCMSecurityProtocolProtos.Type.values());

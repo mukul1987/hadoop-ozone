@@ -17,9 +17,9 @@
 
 package org.apache.hadoop.hdds.scm.ha.io;
 
-import com.google.protobuf.GeneratedMessage;
-import com.google.protobuf.InvalidProtocolBufferException;
-import com.google.protobuf.ProtocolMessageEnum;
+import org.apache.hadoop.thirdparty.protobuf.GeneratedMessage;
+import org.apache.hadoop.thirdparty.protobuf.InvalidProtocolBufferException;
+import org.apache.hadoop.thirdparty.protobuf.ProtocolMessageEnum;
 
 import java.math.BigInteger;
 import java.security.cert.X509Certificate;

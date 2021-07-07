@@ -23,7 +23,7 @@ import org.apache.hadoop.ozone.storage.proto
 import org.apache.hadoop.hdds.utils.db.Codec;
 
 import com.google.common.base.Preconditions;
-import com.google.protobuf.InvalidProtocolBufferException;
+import org.apache.hadoop.thirdparty.protobuf.InvalidProtocolBufferException;
 
 /**
  * Codec to encode PersistedUserVolumeInfo as byte array.

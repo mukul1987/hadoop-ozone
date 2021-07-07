@@ -17,7 +17,7 @@
  */
 package org.apache.hadoop.hdds.scm.protocolPB;
 
-import com.google.protobuf.ByteString;
+import org.apache.hadoop.thirdparty.protobuf.ByteString;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.hdds.protocol.proto.HddsProtos.TokenProto;
 import org.apache.hadoop.security.token.Token;

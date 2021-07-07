@@ -41,7 +41,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.protobuf.Descriptors.Descriptor;
+import org.apache.hadoop.thirdparty.protobuf.Descriptors.Descriptor;
 import org.apache.hadoop.hdds.conf.ConfigurationSource;
 import org.apache.hadoop.hdds.protocol.proto.StorageContainerDatanodeProtocolProtos.CRLStatusReport;
 import org.apache.hadoop.hdds.protocol.proto.StorageContainerDatanodeProtocolProtos.CommandStatus.Status;
@@ -61,7 +61,7 @@ import org.apache.hadoop.ozone.protocol.commands.DeleteBlockCommandStatus.Delete
 import org.apache.hadoop.ozone.protocol.commands.SCMCommand;
 
 import com.google.common.base.Preconditions;
-import com.google.protobuf.GeneratedMessage;
+import org.apache.hadoop.thirdparty.protobuf.GeneratedMessageV3;
 import static java.lang.Math.min;
 import static org.apache.hadoop.hdds.utils.HddsServerUtil.getLogWarnInterval;
 import static org.apache.hadoop.hdds.utils.HddsServerUtil.getScmHeartbeatInterval;
@@ -105,12 +105,12 @@ public class StateContext {
   private final ConfigurationSource conf;
   private final Set<InetSocketAddress> endpoints;
   // Only the latest full report of each type is kept
-  private final AtomicReference<GeneratedMessage> containerReports;
-  private final AtomicReference<GeneratedMessage> nodeReport;
-  private final AtomicReference<GeneratedMessage> pipelineReports;
-  private final AtomicReference<GeneratedMessage> crlStatusReport;
+  private final AtomicReference<GeneratedMessageV3> containerReports;
+  private final AtomicReference<GeneratedMessageV3> nodeReport;
+  private final AtomicReference<GeneratedMessageV3> pipelineReports;
+  private final AtomicReference<GeneratedMessageV3> crlStatusReport;
   // Incremental reports are queued in the map below
-  private final Map<InetSocketAddress, List<GeneratedMessage>>
+  private final Map<InetSocketAddress, List<GeneratedMessageV3>>
       incrementalReportsQueue;
   private final Map<InetSocketAddress, Queue<ContainerAction>> containerActions;
   private final Map<InetSocketAddress, Queue<PipelineAction>> pipelineActions;
@@ -125,7 +125,7 @@ public class StateContext {
   // List of supported full report types.
   private final List<String> fullReportTypeList;
   // ReportType -> Report.
-  private final Map<String, AtomicReference<GeneratedMessage>> type2Reports;
+  private final Map<String, AtomicReference<GeneratedMessageV3>> type2Reports;
 
   /**
    * term of latest leader SCM, extract from SCMCommand.
@@ -277,7 +277,7 @@ public class StateContext {
    *
    * @param report report to be added
    */
-  public void addIncrementalReport(GeneratedMessage report) {
+  public void addIncrementalReport(GeneratedMessageV3 report) {
     if (report == null) {
       return;
     }
@@ -300,7 +300,7 @@ public class StateContext {
    *
    * @param report report to be refreshed
    */
-  public void refreshFullReport(GeneratedMessage report) {
+  public void refreshFullReport(GeneratedMessageV3 report) {
     if (report == null) {
       return;
     }
@@ -327,14 +327,14 @@ public class StateContext {
    * @param reportsToPutBack list of reports which failed to be sent by
    *                         heartbeat.
    */
-  public void putBackReports(List<GeneratedMessage> reportsToPutBack,
+  public void putBackReports(List<GeneratedMessageV3> reportsToPutBack,
                              InetSocketAddress endpoint) {
     if (LOG.isDebugEnabled()) {
       LOG.debug("endpoint: {}, size of reportsToPutBack: {}",
           endpoint, reportsToPutBack.size());
     }
     // We don't expect too much reports to be put back
-    for (GeneratedMessage report : reportsToPutBack) {
+    for (GeneratedMessageV3 report : reportsToPutBack) {
       final Descriptor descriptor = report.getDescriptorForType();
       Preconditions.checkState(descriptor != null);
       final String reportType = descriptor.getFullName();
@@ -353,19 +353,19 @@ public class StateContext {
    *
    * @return List of reports
    */
-  public List<GeneratedMessage> getAllAvailableReports(
+  public List<GeneratedMessageV3> getAllAvailableReports(
       InetSocketAddress endpoint) {
     return getReports(endpoint, Integer.MAX_VALUE);
   }
 
-  List<GeneratedMessage> getIncrementalReports(
+  List<GeneratedMessageV3> getIncrementalReports(
       InetSocketAddress endpoint, int maxLimit) {
-    List<GeneratedMessage> reportsToReturn = new LinkedList<>();
+    List<GeneratedMessageV3> reportsToReturn = new LinkedList<>();
     synchronized (incrementalReportsQueue) {
-      List<GeneratedMessage> reportsForEndpoint =
+      List<GeneratedMessageV3> reportsForEndpoint =
           incrementalReportsQueue.get(endpoint);
       if (reportsForEndpoint != null) {
-        List<GeneratedMessage> tempList = reportsForEndpoint.subList(
+        List<GeneratedMessageV3> tempList = reportsForEndpoint.subList(
             0, min(reportsForEndpoint.size(), maxLimit));
         reportsToReturn.addAll(tempList);
         tempList.clear();
@@ -374,21 +374,21 @@ public class StateContext {
     return reportsToReturn;
   }
 
-  List<GeneratedMessage> getFullReports(
+  List<GeneratedMessageV3> getFullReports(
       InetSocketAddress endpoint) {
     Map<String, AtomicBoolean> mp = fullReportSendIndicator.get(endpoint);
-    List<GeneratedMessage> nonIncrementalReports = new LinkedList<>();
+    List<GeneratedMessageV3> nonIncrementalReports = new LinkedList<>();
     if (null != mp){
       for (Map.Entry<String, AtomicBoolean> kv : mp.entrySet()) {
         if (kv.getValue().get()) {
           String reportType = kv.getKey();
-          final AtomicReference<GeneratedMessage> ref =
+          final AtomicReference<GeneratedMessageV3> ref =
               type2Reports.get(reportType);
           if (ref == null) {
             throw new RuntimeException(reportType + " is not a valid full "
                 + "report type!");
           }
-          final GeneratedMessage msg = ref.get();
+          final GeneratedMessageV3 msg = ref.get();
           if (msg != null) {
             nonIncrementalReports.add(msg);
             mp.get(reportType).set(false);
@@ -405,12 +405,12 @@ public class StateContext {
    *
    * @return List of reports
    */
-  public List<GeneratedMessage> getReports(InetSocketAddress endpoint,
+  public List<GeneratedMessageV3> getReports(InetSocketAddress endpoint,
                                            int maxLimit) {
     if (maxLimit < 0) {
       throw new IllegalArgumentException("Illegal maxLimit value: " + maxLimit);
     }
-    List<GeneratedMessage> reports = getFullReports(endpoint);
+    List<GeneratedMessageV3> reports = getFullReports(endpoint);
     if (maxLimit <= reports.size()) {
       return reports.subList(0, maxLimit);
     } else {
@@ -847,22 +847,22 @@ public class StateContext {
   }
 
   @VisibleForTesting
-  public GeneratedMessage getContainerReports() {
+  public GeneratedMessageV3 getContainerReports() {
     return containerReports.get();
   }
 
   @VisibleForTesting
-  public GeneratedMessage getNodeReport() {
+  public GeneratedMessageV3 getNodeReport() {
     return nodeReport.get();
   }
 
   @VisibleForTesting
-  public GeneratedMessage getPipelineReports() {
+  public GeneratedMessageV3 getPipelineReports() {
     return pipelineReports.get();
   }
 
   @VisibleForTesting
-  public GeneratedMessage getCRLStatusReport() {
+  public GeneratedMessageV3 getCRLStatusReport() {
     return crlStatusReport.get();
   }
 }

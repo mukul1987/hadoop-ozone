@@ -18,8 +18,8 @@
 package org.apache.hadoop.ozone.container.common.report;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.google.protobuf.Descriptors;
-import com.google.protobuf.GeneratedMessage;
+import org.apache.hadoop.thirdparty.protobuf.Descriptors;
+import org.apache.hadoop.thirdparty.protobuf.GeneratedMessageV3;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -85,7 +85,7 @@ public class TestReportPublisher {
     }
 
     @Override
-    protected GeneratedMessage getReport() {
+    protected GeneratedMessageV3 getReport() {
       getReportCount++;
       return null;
     }
@@ -195,7 +195,7 @@ public class TestReportPublisher {
             new ThreadFactoryBuilder().setDaemon(true)
                 .setNameFormat("Unit test ReportManager Thread - %d").build());
     publisher.init(dummyContext, executorService);
-    GeneratedMessage report =
+    GeneratedMessageV3 report =
         ((CRLStatusReportPublisher) publisher).getReport();
     Assert.assertNotNull(report);
     for(Descriptors.FieldDescriptor descriptor :

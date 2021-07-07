@@ -17,7 +17,7 @@
  */
 package org.apache.hadoop.hdds.function;
 
-import com.google.protobuf.ServiceException;
+import org.apache.hadoop.thirdparty.protobuf.ServiceException;
 
 /**
  * Functional interface like java.util.function.Function but with

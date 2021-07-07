@@ -18,8 +18,8 @@
 
 package org.apache.hadoop.ozone.om.failover;
 
-import com.google.protobuf.RpcController;
-import com.google.protobuf.ServiceException;
+import org.apache.hadoop.thirdparty.protobuf.RpcController;
+import org.apache.hadoop.thirdparty.protobuf.ServiceException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
