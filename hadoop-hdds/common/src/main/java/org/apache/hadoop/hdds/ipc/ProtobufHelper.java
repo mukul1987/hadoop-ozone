@@ -27,10 +27,10 @@ import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Helper methods for protobuf related RPC implementation
+ * Helper methods for protobuf related RPC implementation.
  */
 @InterfaceAudience.Private
-public class ProtobufHelper {
+public final class ProtobufHelper {
   private ProtobufHelper() {
     // Hidden constructor for class with only static helper methods
   }
@@ -58,7 +58,7 @@ public class ProtobufHelper {
    * This map should not be accessed directly. Used the getFixedByteString
    * methods instead.
    */
-  private final static ConcurrentHashMap<Object, ByteString>
+  private static final ConcurrentHashMap<Object, ByteString>
       FIXED_BYTESTRING_CACHE = new ConcurrentHashMap<>();
 
   /**
