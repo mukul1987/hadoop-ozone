@@ -18,7 +18,7 @@
 #
 
 RULE Hadoop RPC request
-INTERFACE ^com.google.protobuf.BlockingService
+INTERFACE ^org.apache.hadoop.thirdparty.protobuf.BlockingService
 METHOD callBlockingMethod
 IF true
 DO traceln("--> RPC message request: " + $3.getClass().getSimpleName() + " from " + linked(Thread.currentThread(), "source")); 
@@ -27,7 +27,7 @@ ENDRULE
 
 
 RULE Hadoop RPC response
-INTERFACE ^com.google.protobuf.BlockingService
+INTERFACE ^org.apache.hadoop.thirdparty.protobuf.BlockingService
 METHOD callBlockingMethod
 AT EXIT
 IF true
