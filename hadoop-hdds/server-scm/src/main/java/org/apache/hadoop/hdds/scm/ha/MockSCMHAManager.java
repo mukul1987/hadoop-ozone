@@ -24,7 +24,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.protobuf.InvalidProtocolBufferException;
+import org.apache.hadoop.thirdparty.protobuf.InvalidProtocolBufferException;
 import org.apache.hadoop.hdds.protocol.proto.SCMRatisProtocol.RequestType;
 import org.apache.hadoop.hdds.scm.AddSCMRequest;
 import org.apache.hadoop.hdds.scm.metadata.DBTransactionBuffer;

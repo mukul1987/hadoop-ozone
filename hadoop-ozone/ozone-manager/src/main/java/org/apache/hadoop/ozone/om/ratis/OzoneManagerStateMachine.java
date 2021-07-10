@@ -20,7 +20,7 @@ package org.apache.hadoop.ozone.om.ratis;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.google.protobuf.ServiceException;
+import org.apache.hadoop.thirdparty.protobuf.ServiceException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;

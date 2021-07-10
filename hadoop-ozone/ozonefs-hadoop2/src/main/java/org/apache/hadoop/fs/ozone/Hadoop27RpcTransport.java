@@ -85,7 +85,8 @@ public class Hadoop27RpcTransport implements OmTransport {
       OMNotLeaderException notLeaderException =
           OMFailoverProxyProvider.getNotLeaderException(e);
       if (notLeaderException == null) {
-        throw ProtobufHelper.getRemoteException(new com.google.protobuf.ServiceException(e.getCause()));
+        throw ProtobufHelper.getRemoteException(
+            new com.google.protobuf.ServiceException(e.getCause()));
       }
       throw new IOException("Could not determine or connect to OM Leader.");
     }

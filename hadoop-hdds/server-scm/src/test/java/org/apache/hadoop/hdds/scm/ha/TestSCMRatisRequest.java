@@ -18,7 +18,7 @@
 
 package org.apache.hadoop.hdds.scm.ha;
 
-import com.google.protobuf.InvalidProtocolBufferException;
+import org.apache.hadoop.thirdparty.protobuf.InvalidProtocolBufferException;
 import org.apache.hadoop.hdds.protocol.proto.HddsProtos;
 import org.apache.hadoop.hdds.scm.pipeline.PipelineID;
 import org.apache.ratis.protocol.Message;

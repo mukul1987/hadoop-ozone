@@ -18,27 +18,27 @@
 package org.apache.hadoop.hdds.scm.ha.io;
 
 import org.apache.hadoop.thirdparty.protobuf.ByteString;
-import org.apache.hadoop.thirdparty.protobuf.GeneratedMessage;
+import org.apache.hadoop.thirdparty.protobuf.GeneratedMessageV3;
 import org.apache.hadoop.thirdparty.protobuf.InvalidProtocolBufferException;
 import org.apache.hadoop.hdds.scm.ha.ReflectionUtil;
 
 import java.lang.reflect.InvocationTargetException;
 
 /**
- * {@link Codec} for {@link GeneratedMessage} objects.
+ * {@link Codec} for {@link GeneratedMessageV3} objects.
  */
 public class GeneratedMessageCodec implements Codec {
 
   @Override
   public ByteString serialize(Object object) {
-    return ((GeneratedMessage)object).toByteString();
+    return ((GeneratedMessageV3)object).toByteString();
   }
 
   @Override
-  public GeneratedMessage deserialize(Class<?> type, ByteString value)
+  public GeneratedMessageV3 deserialize(Class<?> type, ByteString value)
       throws InvalidProtocolBufferException {
     try {
-      return (GeneratedMessage) ReflectionUtil.getMethod(type,
+      return (GeneratedMessageV3) ReflectionUtil.getMethod(type,
           "parseFrom", byte[].class)
           .invoke(null, (Object) value.toByteArray());
     } catch (NoSuchMethodException | IllegalAccessException

@@ -19,7 +19,7 @@
 package org.apache.hadoop.ozone.om.ha;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.protobuf.ServiceException;
+import org.apache.hadoop.thirdparty.protobuf.ServiceException;
 
 import java.io.Closeable;
 import java.io.IOException;
